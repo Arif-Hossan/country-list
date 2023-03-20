@@ -1,0 +1,14 @@
+body{
+    background-color: #e3ffe3;
+}
+.search-icon{
+    margin-left: -2.5em;
+}
+.single-country{
+    background-color: #ccffcc;
+    color: #454745;
+    margin: 10px 0px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    line-height: .5rem;
+}
