@@ -13,10 +13,10 @@
  </head>
   <body class="container">
     <header>
-        <form class="d-flex mt-4 mb-4 w-50" role="search">
-            <input class="form-control " type="search" placeholder="Search Country" aria-label="Search">
-            <button class="btn btn-outline-none search-icon" type="submit"><i class="fa-solid fa-magnifying-glass" style="color: #869686;"></i></button>
-        </form>
+        <div class="d-flex mt-4 mb-4 w-50">
+            <input class="form-control" id="search-field" type="search" placeholder="Search Country By Name" aria-label="Search">
+            <button class="btn btn-outline-none search-icon" onclick="search()" type="submit"><i class="fa-solid fa-magnifying-glass" style="color: #869686;"></i></button>
+        </div>
     </header>
     <section class="filter">
         <div class="row row-cols-1 row-cols-md-2">
@@ -49,10 +49,19 @@
             </div>
         </div>
     </section>
-
+    <!-- Countries Container -->
     <section id="countries-container" class="mt-3">
-        
     </section>
+    <!-- spinner -->
+    <section id="spinner" class="d-none">
+        <div style="height: 400px;" class="d-flex justify-content-center align-items-center">
+          <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden"></span>
+          </div>
+        </div>
+      </section>
+
+
 
     <!-- Javascript -->
     <script src="app.js"></script>
