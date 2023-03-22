@@ -40,29 +40,30 @@
                 </div>
             </div>
             <div class="col">
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-                    <option selected="">Sort by Letter</option>
-                    <option value="1">Ascending</option>
-                    <option value="2">Descending</option>
+                <select id="'sort-select" class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option selected>Sort by Name</option>
+                    <option value="ascending">Ascending</option>
+                    <option value="descending">Descending</option>
                   </select>
 
             </div>
         </div>
     </section>
+    <!-- spinner -->
+    <section id="spinner" class="d-none">
+      <div style="height: 400px;" class="d-flex justify-content-center align-items-center">
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden"></span>
+        </div>
+      </div>
+  </section>
     <!-- Countries Container -->
     <section id="countries-container" class="mt-3">
     </section>
-    <!-- spinner -->
-    <section id="spinner" class="d-none">
-        <div style="height: 400px;" class="d-flex justify-content-center align-items-center">
-          <div class="spinner-border text-success" role="status">
-            <span class="visually-hidden"></span>
-          </div>
-        </div>
-    </section>
+
 
     <!-- pagination -->
-    <nav aria-label="Page navigation">
+    <nav aria-label="Page navigation" class="mb-5 mt-3">
       <ul id="pagination-container" class="pagination justify-content-center"></ul>
     </nav>
     <!-- Javascript -->

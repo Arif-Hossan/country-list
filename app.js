@@ -1,4 +1,7 @@
 let countries = [];
+let pageSize = 25;
+let paginationContainer;
+let paginatedCountries;
 
 // Fetch country list
 const loadCountries = async () => {
@@ -6,25 +9,24 @@ const loadCountries = async () => {
   const res = await fetch(url);
   const data = await res.json();
   countries = data;
-  const pageSize = 25;
-  const paginatedCountries = paginateCountries(countries, pageSize);
-  const paginationContainer = document.getElementById('pagination-container');
-  for (let i = 0; i < paginatedCountries.length; i++) {
-    const pageLink = document.createElement('a');
-    pageLink.classList.add('page-link');
-    pageLink.href = '#';
-    pageLink.textContent = i + 1;
-    pageLink.addEventListener('click', () => {
-      const startIndex = i * pageSize;
-      const endIndex = startIndex + pageSize;
-      displayCountries(countries, startIndex, endIndex);
-    });
-    const pageItem = document.createElement('li');
-    pageItem.classList.add('page-item');
-    pageItem.appendChild(pageLink);
-    paginationContainer.appendChild(pageItem);
-  }
-  displayCountries(countries, 0, pageSize);
+  paginatedCountries = paginateCountries(countries, pageSize);
+  paginationContainer = document.getElementById('pagination-container');
+  let searchField = document.getElementById('search-field');
+
+  // Add search event listener
+  searchField.addEventListener('input', () => {
+    let input = searchField.value.toLowerCase();
+    let searchedCountries = countries.filter(country => country.name.toLowerCase().includes(input));
+    paginatedCountries = paginateCountries(searchedCountries, pageSize);
+    displayCountries(paginatedCountries[0], 0, pageSize);
+    updatePaginationLinks(paginationContainer, paginatedCountries.length);
+  });
+
+  // Add pagination links
+  updatePaginationLinks(paginationContainer, paginatedCountries.length);
+
+  // Display countries
+  displayCountries(paginatedCountries[0], 0, pageSize);
 }
 
 // Paginate countries
@@ -41,10 +43,10 @@ const paginateCountries = (countries, pageSize) => {
 }
 
 // Display countries
-const displayCountries = (countries, startIndex, endIndex) => {
+const displayCountries = (paginatedCountries, startIndex, endIndex) => {
   const countriesContainer = document.getElementById('countries-container');
   countriesContainer.textContent = '';
-  countries.slice(startIndex, endIndex).forEach(country => {
+  paginatedCountries.slice(startIndex, endIndex).forEach(country => {
     const singleCountryDiv = document.createElement('div');
     singleCountryDiv.classList.add('single-country');
     singleCountryDiv.innerHTML = `
@@ -55,22 +57,22 @@ const displayCountries = (countries, startIndex, endIndex) => {
   });
 }
 
-// Search countries
-const search = () => {
-  const inputField = document.getElementById('search-field').value;
-  const searchedCountry = countries.filter(country =>
-    country.name.toLowerCase().includes(inputField.toLowerCase())
-  );
-  displayCountries(searchedCountry, 0, 25);
-}
-
-// Toggle spinner
-const toggleSpinner = isLoading => {
-  const loader = document.getElementById('spinner');
-  if (isLoading) {
-    loader.classList.remove('d-none');
-  } else {
-    loader.classList.add('d-none');
+// Update pagination links
+const updatePaginationLinks = (paginationContainer, numPages) => {
+  paginationContainer.textContent = '';
+  for (let i = 0; i < numPages; i++) {
+    const pageLink = document.createElement('a');
+    pageLink.classList.add('page-link');
+    pageLink.href = '#';
+    pageLink.textContent = i + 1;
+    pageLink.addEventListener('click', () => {
+      displayCountries(paginatedCountries[i], 0, pageSize);
+    });
+    const pageItem = document.createElement('li');
+    pageItem.classList.add('page-item');
+    pageItem.appendChild(pageLink);
+    paginationContainer.appendChild(pageItem);
   }
 }
-loadCountries()
+
+loadCountries();
